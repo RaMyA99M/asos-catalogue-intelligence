@@ -18,10 +18,14 @@ This project investigates the ASOS product catalogue through three analytical le
 | | |
 |---|---|
 | **Dataset** | ASOS product listing data |
-| **Initial dataset** | 18,378 rows after price preparation |
-| **Investigation themes** | Assortment · Pricing · Availability |
-| **Tools** | Python · Pandas · Matplotlib · Seaborn |
-| **Approach** | Exploratory data analysis |
+| Initial dataset | 30,845 rows |
+| Analysed records | 30,827 rows |
+| Brand extraction coverage | 98.1% (30,251 matched records) |
+| Investigation themes | Assortment · Pricing · Availability |
+| Tools | Python · Pandas · Matplotlib · Seaborn |
+| Approach | Exploratory data analysis |
+
+
 
 ![Investigation process map](visuals/analysis-process.png)
 
@@ -59,10 +63,15 @@ The dataset contains product URLs, names, size information, categories, prices, 
 
 Several additional data-quality considerations affect interpretation:
 
-- **Repeated SKUs:** The initial inspection identified 504 rows whose SKUs appeared more than once. These records should not automatically be treated as separate unique products or deleted without further verification.
-- **Brand extraction:** Brand labels were extracted from product descriptions. Some labels are truncated or malformed, so brand-level counts and comparisons may not represent correctly identified brands in every case.
-- **Availability indicators:** Stock status is inferred from text within the size field. The resulting metrics depend on how consistently sizes and stock statuses are represented.
-- **Catalogue representation:** Listing counts describe the records available in this dataset, not necessarily the complete ASOS catalogue.
+- **Repeated SKUs:** The audit identified 524 SKU groups appearing more than once. Repeated identifiers were retained rather than automatically deduplicated because repetition alone does not establish that records are erroneous.
+
+- **Brand extraction:** Brand labels were extracted from product descriptions using a curated list of known brands. The latest reported coverage was 98.1%, with 576 records remaining unmatched. Matched labels may still contain classification errors, and parent brands and sub-brands are not consistently consolidated.
+
+- **Price preparation:** Original price text was retained while numeric prices and price labels were extracted. All 30,827 analysed records had a valid parsed price. Records labelled “Sale” were not treated as evidence of a specific discount amount because reliable original-price comparisons were not available.
+
+- **Availability indicators:** Stock status must be interpreted according to the actual structure and meaning of the size field. An out-of-stock metric should only be reported after verifying that the field consistently distinguishes available sizes from unavailable ones.
+
+- **Catalogue representation:** Counts describe records in this dataset, not necessarily unique products or the complete ASOS catalogue.
 
 These issues are important when interpreting brand rankings, catalogue concentration and availability patterns.
 
@@ -82,7 +91,11 @@ This analysis compares listing counts across extracted brand labels and explores
 
 **Business relevance:** Catalogue concentration can help frame questions about brand representation and assortment structure. Interpretation depends on the reliability of the extracted labels and the treatment of repeated records.
 
-**Finding:** [Insert the validated concentration result and its interpretation.]
+**Finding:** The 10 largest extracted brand labels account for 13,158 records, representing 42.7% of the 30,827 analysed records. ASOS DESIGN is the largest individual label, with 5,477 records, equivalent to approximately 17.8% of the dataset.
+
+**Interpretation:** Catalogue representation is concentrated among a leading group of brand labels, with ASOS DESIGN substantially ahead of the next-largest label, Topshop, at 1,869 records.
+
+**Caveat:** These figures represent catalogue records grouped by extracted labels, not verified unique products. Brand-level comparisons also retain distinctions between parent brands and sub-brands.
 
 ### B. Pricing — how does catalogue scale relate to price positioning?
 
@@ -94,11 +107,17 @@ This analysis compares brand-level catalogue size with median product price and 
 
 **Business relevance:** Understanding these patterns can support further investigation into price positioning and assortment differences across brands.
 
-**Finding:** [Insert the validated relationship, supporting figures and interpretation.]
+**Finding:** ASOS DESIGN combines the largest catalogue representation (5,477 records) with a median listed price of 30. Across the full dataset, the median listed price is 32, while the mean is 41.02. Approximately 47.7% of records are priced at 30 or below.
+
+The median listed price for Sale-labelled records is 25.50, compared with 36.00 for Standard-labelled records.
+
+**Interpretation:** The catalogue contains a substantial share of lower-priced listings, while the difference between the overall mean and median suggests that higher-priced records pull the mean upward. Sale-labelled and Standard-labelled records also occupy different price positions in this snapshot.
+
+**Caveat:** These are descriptive comparisons. They do not establish a relationship between catalogue size and price across all brands, prove that sale labels represent a particular discount, or measure sales performance.
+
+![Price distribution](visuals/price-distribution.png)
 
 ### C. Availability — what do size-level indicators reveal?
-
-![Size-level availability analysis](visuals/availability-analysis.png)
 
 The availability analysis uses size information to calculate the proportion of listed sizes marked out of stock, then explores how this indicator varies across price segments.
 
@@ -106,7 +125,11 @@ The availability analysis uses size information to calculate the proportion of l
 
 **Business relevance:** These indicators can help identify questions for further inventory investigation. They cannot establish customer demand, unmet demand or lost revenue without additional evidence.
 
-**Finding:** [Insert the validated availability result and its interpretation.]
+**Status:** Pending validation of the size-level availability indicator.
+
+The next step is to verify how the source represents sizes and out-of-stock states, then calculate the out-of-stock proportion and compare it across price segments if the data supports a consistent measure.
+
+**Caveat:** No availability conclusion is reported until the field semantics and calculation have been validated.
 
 ---
 
@@ -129,9 +152,9 @@ In particular, associations between catalogue size, price and availability shoul
 
 | Investigation | Validated finding | Confidence / caveat |
 |---|---|---|
-| Assortment | [Insert final finding] | Depends on brand-label quality and repeated records |
-| Price positioning | [Insert final finding] | Descriptive association, not causation |
-| Availability | [Insert final finding] | Based on listed size-level stock indicators |
+| Assortment | Top 10 extracted brand labels account for 42.7% of analysed records; ASOS DESIGN accounts for 17.8%. | Depends on brand-label accuracy and interpretation of repeated records. |
+| Price positioning | Median listed price is 32; 47.7% of records are priced at 30 or below. Sale-labelled records have a lower median than Standard-labelled records. | Descriptive snapshot; no evidence of sales performance or discount size. |
+| Availability | Pending validation. | Requires verification of size-level stock indicators before reporting a result. |
 
 ---
 
