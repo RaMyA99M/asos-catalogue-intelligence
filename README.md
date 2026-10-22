@@ -3,13 +3,28 @@
 
 **DATA INVESTIGATION / 001 · RETAIL ANALYTICS**
 
-What can a fashion catalogue reveal about assortment composition and listed-price positioning, and what additional commercial data would be needed to answer?
+<table>
+  <tr>
+    <td width="34%" valign="top">
+      <img src="https://images.unsplash.com/photo-1603400521630-9f2de124b33b?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=900" alt="Neutral and terracotta garments on clothing racks in a minimalist fashion showroom" width="100%">
+    </td>
+    <td valign="middle">
+      <p><strong>DATA INVESTIGATION / 001</strong><br>RETAIL ANALYTICS</p>
+      <h2>Inside the ASOS Catalogue</h2>
+      <p><em>Assortment concentration, brand price positioning and listed-price structure.</em></p>
+      <p>What can a fashion catalogue reveal about assortment composition and listed-price positioning, and what additional commercial data would be needed to answer?</p>
+      <p><strong>29,990</strong> catalogue records &nbsp;·&nbsp; <strong>42.8%</strong> top-10 label share &nbsp;·&nbsp; <strong>48.3%</strong> priced at 30 or below</p>
+    </td>
+  </tr>
+</table>
 
 This project explores a product-catalogue dataset using Python, Pandas, and Matplotlib. It moves from data quality and feature preparation to three descriptive investigations: brand representation, brand-level median listed prices, and the overall structure of listed prices.
 
 The objective is not to infer sales or demand from listings. The goal is to build a defensible catalogue baseline, communicate what the evidence shows, and identify the next questions to test with richer data.
 
 > **Scope:** This is an independent analysis of a collected product-catalogue dataset and is not affiliated with ASOS. Catalogue records are not transactions, units sold, profit, customer demand, or a live inventory feed.
+
+*Cover image: [Thom Bradley on Unsplash](https://unsplash.com/photos/clothing-racks-with-neutral-toned-garments-mwa_nzFpnJw).*
 
 ---
 
