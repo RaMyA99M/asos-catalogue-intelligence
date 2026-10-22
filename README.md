@@ -1,226 +1,235 @@
 # Inside the ASOS Catalogue
-### An investigation into assortment, price positioning & availability
+### An investigation into assortment, price positioning & catalogue composition
 
-**DATA INVESTIGATION / 001** · Exploratory retail analytics
+**DATA INVESTIGATION / 001 · RETAIL ANALYTICS**
 
-*What can an online fashion catalogue reveal about assortment strategy, price positioning and product availability?*
+What does a fashion retailer's product catalogue reveal about its assortment structure, brand concentration and price positioning?
 
----
+This project investigates the ASOS catalogue through exploratory retail analytics, examining how catalogue records are distributed across brands, how listed prices vary, and where the assortment is concentrated.
 
-## The Investigation
-
-Online fashion catalogues provide a snapshot of the products, brands, prices and size availability presented to shoppers. Analysing these listings can reveal patterns in assortment and pricing, while raising questions about how reliably catalogue data represents the underlying retail operation.
-
-This project investigates the ASOS product catalogue through three analytical lenses: **Assortment, Price positioning and Availability**. The objective is to translate product-level data into commercially relevant observations, distinguish evidence from assumptions, and identify where additional information would strengthen the analysis.
-
-### At a glance
-
-| | |
-|---|---|
-| **Dataset** | ASOS product listing data |
-| Initial dataset | 30,845 rows |
-| Analysed records | 30,827 rows |
-| Brand extraction coverage | 98.1% (30,251 matched records) |
-| Investigation themes | Assortment · Pricing · Availability |
-| Tools | Python · Pandas · Matplotlib · Seaborn |
-| Approach | Exploratory data analysis |
-
-
-
-![Investigation process map](visuals/analysis-process.png)
+Rather than treating a large catalogue as evidence of commercial success, the analysis focuses on what the available product-level data can reliably tell us.
 
 ---
 
-## 01 / The brief
+## The investigation
 
-### What can the catalogue reveal?
+A large assortment can create variety for shoppers, but its composition matters just as much as its size.
 
-The investigation is organised around three questions:
+This investigation explores three questions:
 
-**A. Assortment**
-- How are product listings distributed across extracted brand labels?
-- How concentrated is the observed catalogue among the largest labels?
+1. **Catalogue composition** — How concentrated is the catalogue across brands and labels?
+2. **Price positioning** — How do listed price levels differ across brands?
+3. **Price distribution** — What does the overall distribution of listed prices reveal about the catalogue's price structure?
 
-**B. Price positioning**
-- How do product prices vary across brands?
-- Is catalogue size associated with median price?
+## Key findings
 
-**C. Availability**
-- What proportion of listed sizes is marked out of stock?
-- How do the observed availability indicators vary across price segments?
+| Metric | Finding |
+|:--|--:|
+| Retained catalogue records | 29,990 |
+| Brand extraction coverage | 98.1% |
+| Top 10 labels' catalogue share | 42.8% |
+| Largest label: ASOS DESIGN | 5,373 records |
+| ASOS DESIGN catalogue share | 17.9% |
+| Median listed price | 32.00 |
+| Mean listed price | 40.73 |
+| Records priced at 30 or below | 48.3% |
 
-These questions provide a structured way to explore the catalogue without assuming that listing counts, prices, or stock indicators directly measure commercial performance.
+### 01 / A concentrated catalogue
 
----
+The top 10 labels account for **42.8% of retained catalogue records**, with ASOS DESIGN alone representing **17.9%**.
 
-## 02 / Data quality
+This establishes a measurable concentration in the catalogue's composition. The distribution offers a useful starting point for understanding how assortment breadth is allocated across labels.
 
-### Can we trust the evidence?
+### 02 / A broad listed-price distribution
 
-Before interpreting the results, the dataset and the assumptions behind the analysis need to be considered.
+The median listed price is **32.00**, compared with a mean of **40.73**.
 
-The dataset contains product URLs, names, size information, categories, prices, colours, SKUs, descriptions, and image references. Price values were converted to numeric format and rows without usable prices were excluded from the analysis.
+The difference suggests that higher-priced records pull the average above the midpoint. Almost half of retained records (**48.3%**) are listed at 30.00 or below.
 
-Several additional data-quality considerations affect interpretation:
+This describes the observed price structure, not what customers actually spend.
 
-- **Repeated SKUs:** The audit identified 524 SKU groups appearing more than once. Repeated identifiers were retained rather than automatically deduplicated because repetition alone does not establish that records are erroneous.
+### 03 / Price positioning varies across labels
 
-- **Brand extraction:** Brand labels were extracted from product descriptions using a curated list of known brands. The latest reported coverage was 98.1%, with 576 records remaining unmatched. Matched labels may still contain classification errors, and parent brands and sub-brands are not consistently consolidated.
+Comparing median listed prices across sufficiently represented brands provides a view of their relative price positioning within the catalogue.
 
-- **Price preparation:** Original price text was retained while numeric prices and price labels were extracted. All 30,827 analysed records had a valid parsed price. Records labelled “Sale” were not treated as evidence of a specific discount amount because reliable original-price comparisons were not available.
+The brand comparison uses a minimum record threshold of 30 to reduce the influence of labels with very small representation.
 
-- **Availability indicators:** Stock status must be interpreted according to the actual structure and meaning of the size field. An out-of-stock metric should only be reported after verifying that the field consistently distinguishes available sizes from unavailable ones.
-
-- **Catalogue representation:** Counts describe records in this dataset, not necessarily unique products or the complete ASOS catalogue.
-
-These issues are important when interpreting brand rankings, catalogue concentration and availability patterns.
-
----
-
-## 03 / Investigation
-
-### Three lenses on the catalogue
-
-### A. Assortment — where are listings concentrated?
-
-![Catalogue concentration](visuals/catalogue-concentration.png)
-
-This analysis compares listing counts across extracted brand labels and explores the distribution of catalogue representation.
-
-**What to look for:** Which labels account for the largest share of observed listings? Does the distribution suggest that catalogue representation is concentrated among a relatively small number of labels?
-
-**Business relevance:** Catalogue concentration can help frame questions about brand representation and assortment structure. Interpretation depends on the reliability of the extracted labels and the treatment of repeated records.
-
-**Finding:** The 10 largest extracted brand labels account for 13,158 records, representing 42.7% of the 30,827 analysed records. ASOS DESIGN is the largest individual label, with 5,477 records, equivalent to approximately 17.8% of the dataset.
-
-**Interpretation:** Catalogue representation is concentrated among a leading group of brand labels, with ASOS DESIGN substantially ahead of the next-largest label, Topshop, at 1,869 records.
-
-**Caveat:** These figures represent catalogue records grouped by extracted labels, not verified unique products. Brand-level comparisons also retain distinctions between parent brands and sub-brands.
-
-### B. Pricing — how does catalogue scale relate to price positioning?
-
-![Price positioning](visuals/price-positioning.png)
-
-This analysis compares brand-level catalogue size with median product price and examines price distributions across selected labels.
-
-**What to look for:** Are larger catalogues associated with higher median prices, or do assortment scale and price positioning appear to vary independently?
-
-**Business relevance:** Understanding these patterns can support further investigation into price positioning and assortment differences across brands.
-
-**Finding:** ASOS DESIGN combines the largest catalogue representation (5,477 records) with a median listed price of 30. Across the full dataset, the median listed price is 32, while the mean is 41.02. Approximately 47.7% of records are priced at 30 or below.
-
-The median listed price for Sale-labelled records is 25.50, compared with 36.00 for Standard-labelled records.
-
-**Interpretation:** The catalogue contains a substantial share of lower-priced listings, while the difference between the overall mean and median suggests that higher-priced records pull the mean upward. Sale-labelled and Standard-labelled records also occupy different price positions in this snapshot.
-
-**Caveat:** These are descriptive comparisons. They do not establish a relationship between catalogue size and price across all brands, prove that sale labels represent a particular discount, or measure sales performance.
-
-![Price distribution](visuals/price-distribution.png)
-
-### C. Availability — what do size-level indicators reveal?
-
-The availability analysis uses size information to calculate the proportion of listed sizes marked out of stock, then explores how this indicator varies across price segments.
-
-**What to look for:** Are there differences in the observed out-of-stock indicators between price segments? How consistent is the pattern across listings?
-
-**Business relevance:** These indicators can help identify questions for further inventory investigation. They cannot establish customer demand, unmet demand or lost revenue without additional evidence.
-
-**Status:** Pending validation of the size-level availability indicator.
-
-The next step is to verify how the source represents sizes and out-of-stock states, then calculate the out-of-stock proportion and compare it across price segments if the data supports a consistent measure.
-
-**Caveat:** No availability conclusion is reported until the field semantics and calculation have been validated.
+These comparisons describe listed-price differences. They do not establish brand value, customer willingness to pay or commercial performance.
 
 ---
 
-## 04 / Interpretation
+## Visual investigation
 
-### From patterns to evidence-backed findings
+### 01 / Catalogue concentration
 
-The results should be interpreted according to what the dataset can actually establish.
+![Catalogue concentration across the largest labels](visuals/catalogue-concentration.png)
 
-For each investigation, the final analysis will distinguish between:
+Which labels occupy the largest share of the assortment, and how quickly does cumulative catalogue coverage build?
 
-- **Observed patterns:** What the available records and calculations show.
-- **Interpretation:** What those patterns may suggest in a retail context.
-- **Limitations:** How data quality, measurement choices and missing information affect confidence.
-- **Further investigation:** What evidence would help test the interpretation.
+### 02 / Brand price positioning
 
-In particular, associations between catalogue size, price and availability should not be presented as evidence of causation. Brand-level conclusions also depend on the reliability of the extracted brand labels.
+![Listed price positioning across brands](visuals/price-positioning.png)
 
-### Summary of findings
+How does median listed price vary across brands with sufficient catalogue representation?
 
-| Investigation | Validated finding | Confidence / caveat |
-|---|---|---|
-| Assortment | Top 10 extracted brand labels account for 42.7% of analysed records; ASOS DESIGN accounts for 17.8%. | Depends on brand-label accuracy and interpretation of repeated records. |
-| Price positioning | Median listed price is 32; 47.7% of records are priced at 30 or below. Sale-labelled records have a lower median than Standard-labelled records. | Descriptive snapshot; no evidence of sales performance or discount size. |
-| Availability | Pending validation. | Requires verification of size-level stock indicators before reporting a result. |
+### 03 / Overall price distribution
+
+![Overall distribution of listed prices](visuals/price-distribution.png)
+
+Where do listed prices cluster, and how does the distribution extend beyond its median?
 
 ---
 
-## 05 / Commercial implications
+## Analytical approach
 
-### From catalogue data to decisions
+The investigation follows a structured exploratory workflow.
 
-The analysis provides a starting point for further retail investigation rather than a definitive assessment of commercial performance.
+**01 — Prepare the catalogue**
 
-**1. Review assortment representation**
+- Load and inspect the source dataset.
+- Exclude records missing all core analytical fields: name, SKU, price and category.
+- Remove repeated analytical records using SKU, name, size, category, price, color and description.
+- Preserve the original price wording for traceability.
 
-Use validated brand and product counts to understand catalogue concentration. Before making assortment decisions, establish whether the observed distribution reflects the intended brand strategy and complete product coverage.
+**02 — Structure the data**
 
-**2. Investigate price positioning**
+- Extract brand labels from product details using a curated list of 212 known brands.
+- Match brand names using longest-first prefix matching.
+- Retain unmatched records rather than forcing uncertain classifications.
+- Parse numeric listed prices and classify their original wording.
 
-Compare price distributions across reliably identified brands and relevant product categories. Further analysis could explore whether differences persist when comparing similar product types rather than entire brand assortments.
+**03 — Investigate assortment composition**
 
-**3. Connect availability to inventory and demand**
+- Count catalogue records by brand.
+- Calculate catalogue shares and cumulative concentration.
+- Identify the largest labels and the contribution of the top 10.
 
-Combine catalogue-level size indicators with inventory snapshots, sales transactions and demand measures. This would help establish whether observed stock gaps correspond to meaningful availability issues.
+**04 — Investigate price positioning**
 
-### What additional data would strengthen the analysis?
+- Compare median listed prices across brands.
+- Apply a minimum brand representation threshold of 30 records.
+- Examine the overall price distribution and descriptive statistics.
+- Compare price summaries across the observed price types.
 
-- Reliable product and brand identifiers
-- Inventory snapshots over time
-- Product views, conversion rates and sales
-- Historical prices and promotional activity
-- Product categories and other comparable product attributes
+**05 — Communicate the findings**
 
-With these data sources, the analysis could progress from exploratory catalogue patterns towards more robust commercial evaluation.
+Translate the analysis into visual outputs and business-oriented observations, distinguishing descriptive findings from conclusions that would require additional data.
 
 ---
 
-## Methodology and project files
+## Methodology & data quality
 
-The analysis was conducted in Python using Pandas for data preparation and aggregation, with Matplotlib and Seaborn for visual exploration.
+### Dataset preparation
 
-The accompanying notebook documents the analytical workflow and calculations.
+| Data preparation | Records |
+|:--|--:|
+| Source records | 30,845 |
+| Blank records excluded | 18 |
+| Repeated analytical records removed | 837 |
+| **Retained catalogue records** | **29,990** |
 
-### Repository structure
+Repeated analytical records were identified using:
+
+`sku`, `name`, `size`, `category`, `price`, `color`, `description`
+
+URLs and image fields were excluded from the deduplication key.
+
+### Brand extraction
+
+- Curated brand reference list: **212 brands**
+- Matched records: **29,419**
+- Unmatched records: **571**
+- Extraction coverage: **98.1%**
+
+Brand extraction uses product-detail text and a curated matching approach. Coverage indicates successful extraction under this method, not independently verified brand accuracy.
+
+### Listed-price preparation
+
+Prices were classified using their original wording:
+
+| Price type | Records |
+|:--|--:|
+| Standard | 17,889 |
+| Sale | 12,029 |
+| Starting price | 72 |
+| **Total** | **29,990** |
+
+Numeric amounts were extracted from the listed prices. All non-empty price values were successfully parsed in the final analysis.
+
+**Important interpretation notes**
+
+- *Starting price* may represent a lower-bound price for a product with multiple variants.
+- *Sale* and *Standard* are classifications based on the displayed wording, not independently verified promotional status.
+- The analysis does not estimate discount depth because reliable original/current price pairs are not established.
+- The currency is not confirmed in this analysis; price figures are therefore presented without a currency symbol.
+- Catalogue records represent the analysed listings, not unique styles, units sold or inventory quantities.
+
+---
+
+## What this analysis can and cannot tell us
+
+**What it can tell us**
+- How catalogue representation is distributed across labels.
+- How listed-price levels vary across the observed assortment.
+- Where the catalogue is concentrated and how its prices are distributed.
+
+**What it cannot tell us**
+- Which brands generate the most revenue or profit.
+- Whether customers prefer particular brands or price points.
+- Actual product availability, sell-through or inventory performance.
+- Whether pricing differences cause differences in demand.
+
+Connecting catalogue structure to commercial outcomes would require additional data, such as sales, transactions, inventory history and product-level performance.
+
+---
+
+## Tools & skills
+
+**Python** · Pandas · NumPy · Matplotlib · Jupyter Notebook · Exploratory Data Analysis · Data Cleaning · Data Quality · Retail Analytics · Data Visualisation · Business Storytelling
+
+---
+
+## Repository structure
 
 ```text
 asos-catalogue-intelligence/
-├── README.md
-├── notebook/
-│   └── BrandStrategyAnalysis.ipynb
+│
+├── Inside_the_ASOS_Catalogue_Analysis.ipynb
+├── products_asos.csv
 ├── visuals/
-│   ├── analysis-process.png
 │   ├── catalogue-concentration.png
 │   ├── price-positioning.png
-│   └── availability-analysis.png
-├── findings/
-│   └── recommendations.md
-├── data/
-│   └── README.md
-└── requirements.txt
+│   └── price-distribution.png
+└── README.md
 ```
-
-The raw dataset is not included unless redistribution is permitted. See `data/README.md` for dataset information and access instructions.
-
-## Limitations
-
-This is an exploratory analysis of product listing data. The findings are limited by the quality and coverage of the source records, the reliability of extracted brand labels, potentially repeated SKUs and the use of text-based size availability indicators.
-
-The dataset does not independently establish sales performance, customer demand, inventory history or actual revenue lost due to unavailable sizes. Recommendations should therefore be treated as proposed next steps, not proven commercial outcomes.
 
 ---
 
-*Independent portfolio project. Not affiliated with or endorsed by ASOS.*
+## Reproduce the analysis
+
+1. Clone or download this repository.
+2. Install the required Python libraries.
+3. Open the notebook in Jupyter Notebook or JupyterLab.
+4. Run the notebook cells in order.
+
+Install dependencies:
+
+```bash
+pip install pandas numpy matplotlib jupyter
+```
+
+The source dataset is required to reproduce the analysis. Chart images are provided in the `visuals/` directory.
+
+---
+
+## Closing perspective
+
+A catalogue is more than a collection of products. Its composition and price structure provide a useful lens through which to investigate assortment strategy.
+
+This project establishes that baseline: **where the catalogue is concentrated, how listed prices are distributed, and how price positioning differs across labels.**
+
+The next analytical step would be to connect these patterns with sales and inventory data to evaluate whether catalogue structure translates into commercial performance.
+
+---
+
+*An independent exploratory retail analytics project.*
