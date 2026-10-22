@@ -3,11 +3,11 @@
 
 **DATA INVESTIGATION / 001 · RETAIL ANALYTICS**
 
-What can a fashion catalogue reveal about assortment composition and listed-price positioning—and what would require additional commercial data to answer?
+What can a fashion catalogue reveal about assortment composition and listed-price positioning, and what additional commercial data would be needed to answer?
 
-This project explores a product-catalogue dataset using Python, Pandas and Matplotlib. It moves from data quality and feature preparation to three descriptive investigations: brand representation, brand-level median listed prices, and the overall structure of listed prices.
+This project explores a product-catalogue dataset using Python, Pandas, and Matplotlib. It moves from data quality and feature preparation to three descriptive investigations: brand representation, brand-level median listed prices, and the overall structure of listed prices.
 
-The objective is not to infer sales or demand from listings. It is to build a defensible catalogue baseline, communicate what the evidence shows, and identify the next questions that could be tested with richer data.
+The objective is not to infer sales or demand from listings. The goal is to build a defensible catalogue baseline, communicate what the evidence shows, and identify the next questions to test with richer data.
 
 > **Scope:** This is an independent analysis of a collected product-catalogue dataset and is not affiliated with ASOS. Catalogue records are not transactions, units sold, profit, customer demand, or a live inventory feed.
 
@@ -23,7 +23,7 @@ The investigation follows three connected questions:
 - **Price positioning:** How do listed-price medians vary across the more represented brands?
 - **Price structure:** How do listed prices distribute overall, and how do original price labels relate to the numeric amounts?
 
-The framework separates preparation, investigation, interpretation and commercial implications so that the recommendations remain anchored to the analysis.
+The framework separates preparation, investigation, interpretation, and commercial implications so that the recommendations remain anchored to the analysis.
 
 ## Key findings
 
@@ -51,7 +51,7 @@ Price figures are shown without a currency symbol because the currency is not co
 
 The ten most represented labels account for **42.8%** of retained catalogue records. ASOS DESIGN alone contributes **5,373 records (17.9%)**. Catalogue representation is therefore uneven: a relatively small group of labels accounts for a substantial share of the records, while the remainder is distributed across other labels.
 
-### What this does—and does not—mean
+### What this does and does not mean
 
 This is evidence of **catalogue concentration**, not commercial dependence. More catalogue records do not establish more sales, customer demand, stock depth, revenue or profit. They do, however, affect the descriptive analysis: larger labels have more records contributing to their summaries, while smaller labels can have less stable estimates.
 
@@ -71,7 +71,7 @@ Interpretation should keep three things in view:
 - **Scope:** this is a catalogue snapshot, not a time series or a measure of realised selling prices.
 - **Meaning:** differences in medians describe observed listed-price positioning; they do not prove differences in brand strategy, quality, value, customer willingness to pay, revenue or margin.
 
-A stronger next test would build a brand-level table containing record count, catalogue share, median listed price and valid-price count, then quantify the association between representation and median price on the final cleaned dataset. The coefficient and direction should only be reported after that calculation is run. Category mix should also be examined before interpreting a brand-level relationship, because brands may have different product-category compositions.
+A stronger next test would build a brand-level table containing record count, catalogue share, median listed price, and valid-price count, then quantify the association between representation and median price on the final cleaned dataset. The coefficient and direction should only be reported after that calculation is run. Category mix should also be examined before interpreting a brand-level relationship, because brands may have different product-category compositions.
 
 ## 03 / Listed-price structure
 
@@ -110,7 +110,7 @@ All 29,990 retained price strings produced a numeric amount in the final prepara
 | Repeated analytical records removed | 837 |
 | **Retained catalogue records** | **29,990** |
 
-Blank records were those missing all core analytical fields: name, SKU, price and category.
+Blank records were those missing all core analytical fields: name, SKU, price, and category.
 
 Repeated analytical records were identified using the selected fields:
 
@@ -131,7 +131,7 @@ Brand labels were extracted from product-detail text using a curated list of kno
 
 ### Price preparation
 
-The original wording was preserved, price types were classified, and a numeric amount was extracted. The analysis distinguishes Standard, Sale and Starting price records instead of treating every numeric amount as an identical price concept. The currency was not confirmed, so no currency symbol is applied.
+The original wording was preserved, price types were classified, and a numeric amount was extracted. The analysis distinguishes Standard, Sale, and Starting price records instead of treating every numeric amount as an identical price concept. The currency was not confirmed, so no currency symbol is applied.
 
 ---
 
@@ -151,7 +151,7 @@ The original wording was preserved, price types were classified, and a numeric a
 - Causal explanations for catalogue representation or price differences.
 - Currency denomination where the source does not identify it.
 
-Catalogue records do not necessarily correspond to unique styles, units sold or inventory quantities. This distinction is deliberate: strong analysis means making the strongest claim the data can defend, not the boldest claim imaginable.
+Catalogue records do not necessarily correspond to unique styles, units sold, or inventory quantities. This distinction is deliberate: strong analysis means making the strongest claim the data can defend, not the boldest claim imaginable.
 
 ---
 
@@ -162,7 +162,7 @@ The results establish a descriptive baseline. The practical value is in using th
 1. **Assortment by category:** Does concentration differ across categories and price bands, or is the overall pattern driven by category mix?
 2. **Brand and price:** Does the relationship between catalogue representation and median price remain after comparing like-for-like categories?
 3. **Promotional pricing:** With reliably paired regular and current prices, what is the actual discount distribution by category and brand?
-4. **Commercial performance:** With transaction, margin and time-period data, does catalogue representation align with sales or profitability?
+4. **Commercial performance:** With transaction, margin, and time-period data, does catalogue representation align with sales or profitability?
 5. **Availability over time:** With timestamped product-level stock observations, how does availability change? A single catalogue snapshot cannot answer this.
 
 These are proposed next analyses, not findings established by the current dataset.
